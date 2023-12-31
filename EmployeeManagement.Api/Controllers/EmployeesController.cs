@@ -8,7 +8,7 @@ namespace EmployeeManagement.Api.Controllers
     [ApiController]
     public class EmployeesController : ControllerBase
     {
-        private readonly IEmployeeRepository employeeRepository; 
+        private readonly IEmployeeRepository employeeRepository;
 
         public EmployeesController(IEmployeeRepository employeeRepository)
         {
@@ -91,6 +91,46 @@ namespace EmployeeManagement.Api.Controllers
             {
                 return StatusCode(StatusCodes.Status500InternalServerError,
                     "Error updating data");
+            }
+        }
+        [HttpDelete("{id:int}")]
+        public async Task<ActionResult<Employee>> DeleteEmployee(int id)
+        {
+            try
+            {
+                var employeeToDelete = await employeeRepository.GetEmployee(id);
+
+                if (employeeToDelete == null)
+                {
+                    return NotFound($"Employee with Id = {id} not found");
+                }
+
+                return await employeeRepository.DeleteEmployee(id);
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError,
+                    "Error deleting data");
+            }
+        }
+        [HttpGet("{search}")]
+        public async Task<ActionResult<IEnumerable<Employee>>> Search(string? name, Gender? gender)
+        {
+            try
+            {
+                var result = await employeeRepository.Search(name, gender);
+
+                if (result.Any())
+                {
+                    return Ok(result);
+                }
+
+                return NotFound();
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError,
+                    "Error retrieving data from the database");
             }
         }
     }
