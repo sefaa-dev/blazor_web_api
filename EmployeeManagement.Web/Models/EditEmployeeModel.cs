@@ -1,14 +1,12 @@
 ﻿using EmployeeManagement.Models.CustomValidators;
-using System;
-using System.Collections.Generic;
+using EmployeeManagement.Models;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace EmployeeManagement.Models
+
+
+namespace EmployeeManagement.Web.Models
 {
-    public class Employee
+    public class EditEmployeeModel 
     {
         public int EmployeeId { get; set; }
         [Required(ErrorMessage = "FirstName must be provided")]
@@ -20,6 +18,8 @@ namespace EmployeeManagement.Models
         [EmailDomainValidator(AllowedDomain = "rotaptech.com",
             ErrorMessage = "Only RotapTech.com is allowed")]
         public string Email { get; set; }
+        [Compare("Email", ErrorMessage = "Email and Confirm Email must match")]
+        public string ConfirmEmail { get; set; }
         public DateTime DateOfBrith { get; set; }
         public Gender Gender { get; set; }
         [Required]
@@ -28,5 +28,3 @@ namespace EmployeeManagement.Models
         public Department Department { get; set; }
     }
 }
-
-
