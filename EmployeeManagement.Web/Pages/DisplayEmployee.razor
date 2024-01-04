@@ -15,6 +15,7 @@
             <a href="@($"employeedetails/{Employee.EmployeeId}")" class="btn btn-primary m-1">View</a>
 
             <a href="@($"editemployee/{Employee.EmployeeId}")" class="btn btn-primary m-1">Edit</a>
+            <button type="button" class="btn btn-danger m-1" @onclick="Delete_Click">Delete</button>
             <a href="#" class="btn btn-danger m-1">Delete</a>
         </div>
     }
