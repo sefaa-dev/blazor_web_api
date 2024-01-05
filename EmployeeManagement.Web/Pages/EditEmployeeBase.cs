@@ -78,11 +78,31 @@ namespace EmployeeManagement.Web.Pages
                 NavigationManager.NavigateTo("/");
             }
         }
+
         protected async Task Delete_Click()
         {
             await EmployeeService.DeleteEmployee(Employee.EmployeeId);
             NavigationManager.NavigateTo("/");
+        }
 
+        protected PragimTech.Components.ConfirmBase DeleteConfirmation { get; set; }
+        /// <summary>
+        /// ////////////////////////////
+        /// </summary>
+        protected void Deleted_Click()
+        {
+            DeleteConfirmation.Show();
+        }
+
+        protected async Task ConfirmDelete_Click(bool deleteConfirmed)
+        {
+            if (deleteConfirmed)
+            {
+                await EmployeeService.DeleteEmployee(Employee.EmployeeId);
+                NavigationManager.NavigateTo("/");
+            }
         }
     }
+
+    
 }
